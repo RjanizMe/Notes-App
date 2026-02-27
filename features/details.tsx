@@ -2,7 +2,7 @@ import { taskAtom } from "@/atoms/taskAtom";
 import { router, useLocalSearchParams } from "expo-router";
 import { useAtom } from "jotai";
 import { useState } from "react";
-import { Modal, Text, TouchableOpacity, View } from "react-native";
+import { Modal, ScrollView, Text, TouchableOpacity, View } from "react-native";
 
 export default function ListDetail() {
   const { id } = useLocalSearchParams();
@@ -26,33 +26,41 @@ export default function ListDetail() {
   }
 
   return (
-    <View className="flex-1 bg-gray-100 px-6 pt-10">
-      {/* TASK CARD */}
-      <View className="bg-white rounded-2xl p-5 shadow-sm">
-        <Text className="text-2xl font-bold text-gray-800">{task.title}</Text>
+    <View className="flex-1 bg-gray-100">
+      {/* CONTENT */}
+      <ScrollView
+        className="flex-1 px-6 pt-safe"
+        contentContainerStyle={{ paddingBottom: 140 }}
+        showsVerticalScrollIndicator={false}
+      >
+        <View className="bg-white rounded-2xl p-6 shadow-sm">
+          {/* TITLE */}
+          <Text className="text-2xl font-bold text-gray-800">{task.title}</Text>
 
-        <View className="h-px bg-gray-200 my-3" />
+          {/* DIVIDER */}
+          <View className="h-px bg-gray-200 my-4" />
 
-        <Text className="text-base text-gray-600">
-          {task.notes || "No notes provided."}
-        </Text>
-      </View>
+          {/* NOTES */}
+          <Text className="text-base text-gray-600 leading-relaxed">
+            {task.notes || "No notes provided."}
+          </Text>
+        </View>
+      </ScrollView>
 
       {/* DELETE BUTTON */}
-      <View className="absolute bottom-10 left-6 right-6">
+      <View className="px-6 pb-safe pt-3 bg-gray-100">
         <TouchableOpacity
           onPress={() => setShowModal(true)}
-          className=" py-4 rounded-2xl flex-row items-center justify-center gap-2"
+          className=" py-5 rounded-2xl active:opacity-80"
         >
-          <Text className="text-red-600 font-semibold text-xl pb-safe">
+          <Text className="text-red-500 font-semibold text-lg text-center">
             Delete Task
           </Text>
         </TouchableOpacity>
       </View>
 
-      {/* DELETE MODAL */}
       <Modal visible={showModal} transparent animationType="fade">
-        <View className="flex-1 bg-black/40 justify-center items-center px-6">
+        <View className="pb-safe flex-1 bg-black/40 justify-center items-center px-6">
           <View className="bg-white w-full rounded-2xl p-6">
             <Text className="text-xl font-bold text-center mb-2">
               Delete Task
@@ -65,16 +73,18 @@ export default function ListDetail() {
             <View className="flex-row justify-center gap-3">
               <TouchableOpacity
                 onPress={() => setShowModal(false)}
-                className="bg-gray-200 px-6 py-3 rounded-xl"
+                className="bg-gray-200 px-6 py-3 rounded-xl flex-1"
               >
-                <Text className="font-semibold">Cancel</Text>
+                <Text className="font-semibold text-center">Cancel</Text>
               </TouchableOpacity>
 
               <TouchableOpacity
                 onPress={confirmDelete}
-                className="bg-red-500 px-6 py-3 rounded-xl"
+                className="bg-red-500 px-6 py-3 rounded-xl flex-1"
               >
-                <Text className="text-white font-semibold">Delete</Text>
+                <Text className="text-white font-semibold text-center">
+                  Delete
+                </Text>
               </TouchableOpacity>
             </View>
           </View>
