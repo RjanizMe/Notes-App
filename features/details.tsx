@@ -27,27 +27,22 @@ export default function ListDetail() {
 
   return (
     <View className="flex-1 bg-gray-100">
-      {/* CONTENT */}
       <ScrollView
         className="flex-1 px-6 pt-safe"
         contentContainerStyle={{ paddingBottom: 140 }}
         showsVerticalScrollIndicator={false}
       >
         <View className="bg-white rounded-2xl p-6 shadow-sm">
-          {/* TITLE */}
           <Text className="text-2xl font-bold text-gray-800">{task.title}</Text>
 
-          {/* DIVIDER */}
           <View className="h-px bg-gray-200 my-4" />
 
-          {/* NOTES */}
           <Text className="text-base text-gray-600 leading-relaxed">
             {task.notes || "No notes provided."}
           </Text>
         </View>
       </ScrollView>
 
-      {/* DELETE BUTTON */}
       <View className="px-6 pb-safe pt-3 bg-gray-100">
         <TouchableOpacity
           onPress={() => setShowModal(true)}
